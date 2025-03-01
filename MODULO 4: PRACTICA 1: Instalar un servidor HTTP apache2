@@ -1,0 +1,41 @@
+MODULO 4: PRACTICA 1: Instalar un servidor HTTP apache2
+
+--------------------------------------------------------
+Comandos utilizados
+--------------------------------------------------------
+sudo dnf update -y
+sudo dnf install httpd -y
+--------------------------------------------------------
+sudo systemctl status httpd
+-------------------------------------------------------
+cd /var/www/html  ------------ Debemos estar en modo root.
+--------------------------------------------------------
+mkdir Primera
+cd Primera/
+nano index.html  
+<html><h1>Hola Mundo</h1></html>
+Guardamos y salimos.
+--------------------------------------------------------
+nano /etc/http/conf/http.conf
+
+Al final del documento de modificacion agregamos esto.
+
+<Virtualhost *:80>
+ServerName Primera.localhost
+DocumentRoot /var/www/html/Primera
+ServerAdmin root@localhost
+</VirtualHost>
+
+
+Listen 8080
+
+<Virtualhost *:8080>
+ServerName Segunda.localhost
+DocumentRoot /var/www/html/Segunda
+ServerAdmin root@localhost
+</VirtualHost>
+
+Guardamos y salimos.
+---------------------------------------------------------
+systemctl restart httpd
+---------------------------------------------------------
