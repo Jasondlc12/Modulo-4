@@ -1,0 +1,45 @@
+Practica 3: Instalar un servidor de Impresion
+---------------------------------------------
+Instalación de cups
+---------------------------------------------
+sudo dnf install cups -y
+sudo dnf install cups-pdf
+---------------------------------------------
+Firewall
+---------------------------------------------
+firewall-cmd --zone=public --add-port=631/tcp
+---------------------------------------------
+entramos al archivo de configuración de cups
+---------------------------------------------
+nano /etc/cups/cupsd.conf
+
+configuramos las líneas 
+---------------------------------------------
+Primero agg en la linea de #Only listen la ip de la pc:
+
+Listen 192.168.4.3
+---------------------------------------------
+ 
+#Restric access to the server
+<location/>
+Agg: Allow from 192.168.4.15/32
+---------------------------------------------
+
+#Access to the admin pages...
+<location/admin>
+Agg: Allow from 192.168.4.15/32
+---------------------------------------------
+#Access to configuration files...
+<location/admin/conf>
+Agg: Allow from 192.168.4.15/32
+---------------------------------------------
+#Access to configuration files...
+<location/admin/logs>
+Agg: Allow from 192.168.4.15/32
+
+
+GUARDAMOS Y SALIMOS.
+---------------------------------------------
+Reiniciamos los servicios.
+
+sudo systemctl restart cups
